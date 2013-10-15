@@ -111,7 +111,7 @@ class AMLegExpAPI(foam.api.xmlrpc.Dispatcher):
     super(AMLegExpAPI, self).__init__("legacyexpedientapi", log)
     self._actionLog = KeyAdapter("expedient", logging.getLogger('legexpapi-actions'))
     #retrieve updated dict as a json file from foam db folder
-    filedir = './opt/ofelia/ofam/db'
+    filedir = './opt/ofelia/ofam/local/db'
     filename = os.path.join(filedir, 'expedient_slices_info.json')
     if os.path.isfile(filename):
       f = open(filename, 'r')
@@ -164,7 +164,7 @@ class AMLegExpAPI(foam.api.xmlrpc.Dispatcher):
           free_vlan_list = self.pub_get_offered_vlans(1)
           free_vlan = free_vlan_list[0]
           slice_id = slice_urn.split("+slice+")[1].split(":")[0]
-          #filedir = './opt/ofelia/ofam/db'
+          #filedir = './opt/ofelia/ofam/local/db'
           #filename = os.path.join(filedir, 'expedient_slices_info.json')
           #f = open(filename, 'r')
           #self.slice_info_dict = json.load(f)
@@ -571,7 +571,7 @@ class AMLegExpAPI(foam.api.xmlrpc.Dispatcher):
     #transaction.commit()
     
     #store updated dict as a json file in foam db folder
-    filedir = './opt/ofelia/ofam/db'
+    filedir = './opt/ofelia/ofam/local/db'
     filename = os.path.join(filedir, 'expedient_slices_info.json')
     tempfilename = os.path.join(filedir, 'expedient_slices_info.json.temp.' + str(time.time()) + str(random.randint(1,10000)))
     f = open(tempfilename, 'w')
@@ -625,7 +625,7 @@ class AMLegExpAPI(foam.api.xmlrpc.Dispatcher):
     del self.slice_info_dict[slice_id]
 
     #store updated dict as a json file in foam db folder
-    filedir = './opt/ofelia/ofam/db'
+    filedir = './opt/ofelia/ofam/local/db'
     filename = os.path.join(filedir, 'expedient_slices_info.json')
     tempfilename = os.path.join(filedir, 'expedient_slices_info.json.temp.' + str(time.time()) + str(random.randint(1,10000)))
     f = open(tempfilename, 'w')
@@ -646,7 +646,7 @@ class AMLegExpAPI(foam.api.xmlrpc.Dispatcher):
       return ""
       #raise Exception("Something went wrong with the fs recovery")
     #retrieve updated dict as a json file from foam db folder
-    filedir = './opt/ofelia/ofam/db'
+    filedir = './opt/ofelia/ofam/local/db'
     filename = os.path.join(filedir, 'expedient_slices_info.json')
     if os.path.isfile(filename):
       f = open(filename, 'r')
@@ -692,7 +692,7 @@ class AMLegExpAPI(foam.api.xmlrpc.Dispatcher):
       creation_result = self.priv_CreateSliver(slice_urn, creds, slice_of_rspec, user_info, False, None)
 
     #store updated dict as a json file in foam db folder
-    filedir = './opt/ofelia/ofam/db'
+    filedir = './opt/ofelia/ofam/local/db'
     filename = os.path.join(filedir, 'expedient_slices_info.json')
     tempfilename = os.path.join(filedir, 'expedient_slices_info.json.temp.' + str(time.time()) + str(random.randint(1,10000)))
     f = open(tempfilename, 'w')
@@ -930,7 +930,7 @@ class AMLegExpAPI(foam.api.xmlrpc.Dispatcher):
       #so retrieve the fs in the form Expedient understands
       #TODO: check that ecery time this corresponds to the actual flowspec that FOAM has
       #retrieve updated dict as a json file from foam db folder
-      filedir = './opt/ofelia/ofam/db'
+      filedir = './opt/ofelia/ofam/local/db'
       filename = os.path.join(filedir, 'expedient_slices_info.json')
       if os.path.isfile(filename):
         f = open(filename, 'r')

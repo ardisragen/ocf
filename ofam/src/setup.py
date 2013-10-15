@@ -7,7 +7,7 @@ import fnmatch
 
 def generatePluginFiles ():
   pfiles = []
-  foamroot = "/opt/ofelia/ofam"
+  foamroot = "/opt/ofelia/ofam/local"
   pdirs = os.listdir(os.getcwd() + "/plugins")
   for pd in pdirs:
     dl = []
@@ -54,18 +54,18 @@ def generateDataFiles (srcdir, *wildcards, **kw):
 
 
 def main ():
-  data_files=[('/opt/ofelia/ofam/sbin', ['src/scripts/foam.fcgi']),
-              ('/opt/ofelia/ofam/bin', ['src/scripts/expire', 'src/scripts/expire-emails', 'src/scripts/daily-queue']),
-              ('/opt/ofelia/ofam/schemas', ['schemas/ad.xsd', 'schemas/request.xsd', 'schemas/of-resv-3.xsd',
+  data_files=[('/opt/ofelia/ofam/local/sbin', ['src/scripts/foam.fcgi']),
+              ('/opt/ofelia/ofam/local/bin', ['src/scripts/expire', 'src/scripts/expire-emails', 'src/scripts/daily-queue']),
+              ('/opt/ofelia/ofam/local/schemas', ['schemas/ad.xsd', 'schemas/request.xsd', 'schemas/of-resv-3.xsd',
                                      'schemas/any-extension-schema.xsd', 'schemas/request-common.xsd',
                                      'schemas/of-resv-4.xsd']),
               ('/etc/nginx/sites-available/', ['src/foam.conf'])]
   data_files.extend(generatePluginFiles())
-  data_files.extend(generateDataFiles('src/foamext/', "*.py", newroot='/opt/ofelia/ofam/lib/foamext'))
-  data_files.extend(generateDataFiles('src/ext/', "*.py", newroot='/opt/ofelia/ofam/lib'))
-  #data_files.extend(generateDataFiles('src/foam/', "*.py", newroot='/opt/ofelia/ofam/lib/foam'))
-  data_files.extend(generateDataFiles('src/foam/', "*.*", newroot='/opt/ofelia/ofam/lib/foam'))
-  data_files.extend(generateDataFiles('templates/', "*.txt", newroot='/opt/ofelia/ofam/etc/templates/default'))
+  data_files.extend(generateDataFiles('src/foamext/', "*.py", newroot='/opt/ofelia/ofam/local/lib/foamext'))
+  data_files.extend(generateDataFiles('src/ext/', "*.py", newroot='/opt/ofelia/ofam/local/lib'))
+  #data_files.extend(generateDataFiles('src/foam/', "*.py", newroot='/opt/ofelia/ofam/local/lib/foam'))
+  data_files.extend(generateDataFiles('src/foam/', "*.*", newroot='/opt/ofelia/ofam/local/lib/foam'))
+  data_files.extend(generateDataFiles('templates/', "*.txt", newroot='/opt/ofelia/ofam/local/etc/templates/default'))
 #  pprint.pprint(data_files)
 
   setup(name='foam',
