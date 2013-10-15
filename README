@@ -13,14 +13,12 @@ INSTALLING FOAM
 ---------------
 
 * One (or more) GNU/Linux Debian-like* system.
-* One (or more) GNU/Linux Debian-like* systems to be virtualized by XEN (For VM
-Manager installations only).
 
 Note: for none Debian-like OSs you will have to manually install components since
 OCF ofver-based [http://code.google.com/p/pypelib/] installation scripts only
 support Debian-like OSs currently.
 
-cd ./foam --> check info inside
+cd ./ofam --> check info-code inside
 
 
 2. Installation of FOAM
@@ -38,7 +36,8 @@ https://github.com/fp7-ofelia/ocf/wiki/ofam-configuration (second part of webpag
 4. Additional notes
 -------------------
 
-TBA
+Integration with ofelia.stable pending (almost ready), but OFAM fully functional and 
+capable of interacting with legacy Expedient.
 
 
 ===============
