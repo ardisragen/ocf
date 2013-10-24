@@ -577,7 +577,7 @@ class AdminAPIv1(Dispatcher):
                                       updated_slice_info_dict[slice_id]['switch_slivers'], all_efs)
         self._log.info(slice_of_rspec) #print the new rspec in the log for debugging
         #form the slice URN according to http://groups.geni.net/geni/wiki/GeniApiIdentifiers
-        slice_urn = "urn:publicid:IDN+openflow:foam:fp7-ofelia.eu:ocf+slice+" + str(slice_id)
+        slice_urn = "urn:publicid:IDN+openflow:foam:fp7-ofelia.eu:ocf+slice+" + "id_" + str(slice_id) + "name_" + str(updated_slice_info_dict[slice_id]['slice_name'])
         creds = [] #creds are not needed at least for now: to be fixed
         user_info = {}
         user_info["urn"] = "urn:publicid:IDN+" + "openflow:fp7-ofelia.eu:ocf:ch+" + "user+" + str(updated_slice_info_dict[slice_id]['owner_email']) #temp hack
