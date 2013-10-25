@@ -102,6 +102,34 @@ def parse_args (argv):
   (opts, args) = parser.parse_args()
   return opts
 
+def save_backup():
+  print "Saving backup (db, unallowed vlans, certs)"
+  call("service foam stop")
+  call("service nginx stop")
+  addDir("/opt/ofelia/ofam/backup/db", "www-data")
+  addDir("/opt/ofelia/ofam/backup/etc", "www-data")
+  addDir("/opt/ofelia/ofam/backup/etc/gcf-ca-certs", "root")
+  addDir("/opt/ofelia/ofam/backup/etc/templates/custom", "root")
+  addDir("/opt/ofelia/ofam/backup/other", "www-data")
+  call("cp -r /opt/ofelia/ofam/local/db /opt/ofelia/ofam/backup")
+  call("cp -r /opt/ofelia/ofam/local/etc /opt/ofelia/ofam/backup")
+  call("cp /opt/ofelia/ofam/local/lib/foam/ofeliasettings/vlanset.py /opt/ofelia/ofam/backup/other/")
+  call("rm -r /opt/ofelia/ofam/local")
+  print "Backup saved in backup folder and local installation cleared"
+
+def load_backup():
+  print "Loading backup (db, unallowed vlans)"
+  call("rm -r /opt/ofelia/ofam/local/db")
+  call("rm -r /opt/ofelia/ofam/local/etc")
+  call("mv /opt/ofelia/ofam/backup/db /opt/ofelia/ofam/local")
+  call("mv /opt/ofelia/ofam/backup/etc /opt/ofelia/ofam/local")
+  call("mv /opt/ofelia/ofam/backup/other/vlanset.py /opt/ofelia/ofam/local/lib/foam/ofeliasettings/vlanset.py")
+  call("rm -r /opt/ofelia/ofam/backup")
+  call("foamctl admin:bundle-certs")
+  call("service nginx restart")
+  call("service foam restart")
+  print "Backup loaded from backup folder, backup folder cleared and local installation is good to go"
+
 def main ():
   if os.getuid() != 0:
     print "You must be root to run this installer."
@@ -112,11 +140,19 @@ def main ():
     if call("git status", False, False).strip():
       print "You must commit all changes before running this installer."
       sys.exit(1)
+  need_to_backup = False
+  if (os.path.exists('/opt/ofelia/ofam/local')):
+    need_to_backup = True
+    print "Local installation already exists, need to handle backup"
 
   #fixup_version(opts) #deactivated for now (not crucial)
+  if need_to_backup:
+    save_backup()
   install_foam()
   install_deps()
   postinst(opts)
+  if need_to_backup:
+    load_backup()
 
 if __name__ == '__main__':
   main()

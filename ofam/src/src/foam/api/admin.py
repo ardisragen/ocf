@@ -25,8 +25,6 @@ from foam.ethzlegacyoptinstuff.api_exp_to_rspecv3.expdatatogeniv3rspec import *
 
 import time, random
 
-THIS_SITE_TAG = ConfigDB.getConfigItemByKey("geni.site-tag").getValue()
-
 def _same(val):
 	return "%s" % val 
 
@@ -549,6 +547,7 @@ class AdminAPIv1(Dispatcher):
   @route('/core/admin/expedient-stamp-fs-with-vlan', methods=["POST", "GET"])
   def expedientStampFSwithVlan(self):
     try:
+      THIS_SITE_TAG = ConfigDB.getConfigItemByKey("geni.site-tag").getValue()
       filedir = './opt/ofelia/ofam/local/db'
       filename = os.path.join(filedir, 'expedient_slices_info.json')
       if os.path.isfile(filename):
