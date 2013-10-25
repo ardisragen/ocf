@@ -60,6 +60,8 @@ from pprint import pprint
 import json
 import httplib,urllib,base64
 
+THIS_SITE_TAG = ConfigDB.getConfigItemByKey("geni.site-tag").getValue()
+
 
 def _same(val):
 	return "%s" % val 
@@ -535,10 +537,10 @@ class AMLegExpAPI(foam.api.xmlrpc.Dispatcher):
     self._log.info(slice_of_rspec) #print the rspec in the log for debugging
 
     #form the slice URN according to http://groups.geni.net/geni/wiki/GeniApiIdentifiers
-    slice_urn = "urn:publicid:IDN+openflow:foam:fp7-ofelia.eu:ocf+slice+" + "id_" + str(slice_id) + "name_" + str(slice_name) 
+    slice_urn = "urn:publicid:IDN+openflow:foam:"+ str(THIS_SITE_TAG) +"+slice+" + "id_" + str(slice_id) + "name_" + str(slice_name) 
     creds = [] #creds are not needed at least for now: to be fixed
     user_info = {}
-    user_info["urn"] = "urn:publicid:IDN+" + "openflow:fp7-ofelia.eu:ocf:ch+" + "user+" + str(owner_email) #temp hack
+    user_info["urn"] = "urn:publicid:IDN+openflow:foam"+ str(THIS_SITE_TAG) +"+ch+" + "user+" + str(owner_email) #temp hack
     user_info["email"] = str(owner_email)
     
     #now we have: slice_urn, creds, rspec and user_info : great!
@@ -619,7 +621,7 @@ class AMLegExpAPI(foam.api.xmlrpc.Dispatcher):
     '''
     
     #FOAM deletion
-    slice_urn = "urn:publicid:IDN+openflow:foam:fp7-ofelia.eu:ocf+slice+" + "id_" + str(slice_id) + "name_" + str(self.slice_info_dict[slice_id]['slice_name'])
+    slice_urn = "urn:publicid:IDN+openflow:foam:"+ str(THIS_SITE_TAG) +"+slice+" + "id_" + str(slice_id) + "name_" + str(self.slice_info_dict[slice_id]['slice_name'])
     creds = []
     deleted_slice_info = self.priv_DeleteSliver(slice_urn, creds, [])
     del self.slice_info_dict[slice_id]
@@ -664,10 +666,10 @@ class AMLegExpAPI(foam.api.xmlrpc.Dispatcher):
                                        self.slice_info_dict[slice_id]['switch_slivers'],
                                        self.create_slice_fs(self.slice_info_dict[slice_id]['switch_slivers']))
     self.slice_info_dict[slice_id]['controller_url'] = controller_url
-    slice_urn = "urn:publicid:IDN+openflow:foam:fp7-ofelia.eu:ocf+slice+" + "id_" + str(slice_id) + "name_" + str(self.slice_info_dict[slice_id]['slice_name'])
+    slice_urn = "urn:publicid:IDN+openflow:foam:"+ str(THIS_SITE_TAG) +"+slice+" + "id_" + str(slice_id) + "name_" + str(self.slice_info_dict[slice_id]['slice_name'])
     creds = [] #creds are not needed at least for now: to be fixed
     user_info = {}
-    user_info["urn"] = "urn:publicid:IDN+" + "openflow:fp7-ofelia.eu:ocf:ch+" + "user+" + str(self.slice_info_dict[slice_id]['owner_email']) #temp hack
+    user_info["urn"] = "urn:publicid:IDN+openflow:foam"+ str(THIS_SITE_TAG) +"+ch+" + "user+" + str(self.slice_info_dict[slice_id]['owner_email']) #temp hack
     user_info["email"] = str(self.slice_info_dict[slice_id]['owner_email'])
     if GeniDB.sliceExists(slice_urn):
       sliv_urn = GeniDB.getSliverURN(slice_urn)
@@ -918,7 +920,7 @@ class AMLegExpAPI(foam.api.xmlrpc.Dispatcher):
       return gfs_list
 
     if slice_id in self.slice_info_dict:
-        slice_urn = "urn:publicid:IDN+openflow:foam:fp7-ofelia.eu:ocf+slice+" + "id_" + str(slice_id) + "name_" + str(self.slice_info_dict[slice_id]['slice_name'])
+        slice_urn = "urn:publicid:IDN+openflow:foam:"+ str(THIS_SITE_TAG) +"+slice+" + "id_" + str(slice_id) + "name_" + str(self.slice_info_dict[slice_id]['slice_name'])
     else:
         return [] 
     if GeniDB.sliceExists(slice_urn):

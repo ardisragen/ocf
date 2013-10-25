@@ -25,6 +25,7 @@ from foam.ethzlegacyoptinstuff.api_exp_to_rspecv3.expdatatogeniv3rspec import *
 
 import time, random
 
+THIS_SITE_TAG = ConfigDB.getConfigItemByKey("geni.site-tag").getValue()
 
 def _same(val):
 	return "%s" % val 
@@ -555,7 +556,7 @@ class AdminAPIv1(Dispatcher):
         slice_info_dict = json.load(f)
         f.close()
         self.validate(request.json, [("urn", (str)), ("vlan_stamp_start", (int)), ("vlan_stamp_end", (int))])
-        slice_id = request.json["urn"].split("+slice+")[1].split(":")[0]        
+        slice_id = request.json["urn"].split("+slice+")[1].split(":")[0].split("id_")[1].split("name_")[0]      
         vlan_stamp_start = request.json["vlan_stamp_start"]
         vlan_stamp_end = request.json["vlan_stamp_end"]
         if (slice_id == "") or (slice_id not in slice_info_dict): 
@@ -577,10 +578,10 @@ class AdminAPIv1(Dispatcher):
                                       updated_slice_info_dict[slice_id]['switch_slivers'], all_efs)
         self._log.info(slice_of_rspec) #print the new rspec in the log for debugging
         #form the slice URN according to http://groups.geni.net/geni/wiki/GeniApiIdentifiers
-        slice_urn = "urn:publicid:IDN+openflow:foam:fp7-ofelia.eu:ocf+slice+" + "id_" + str(slice_id) + "name_" + str(updated_slice_info_dict[slice_id]['slice_name'])
+        slice_urn = "urn:publicid:IDN+openflow:foam:"+ str(THIS_SITE_TAG) +"+slice+" + "id_" + str(slice_id) + "name_" + str(updated_slice_info_dict[slice_id]['slice_name'])
         creds = [] #creds are not needed at least for now: to be fixed
         user_info = {}
-        user_info["urn"] = "urn:publicid:IDN+" + "openflow:fp7-ofelia.eu:ocf:ch+" + "user+" + str(updated_slice_info_dict[slice_id]['owner_email']) #temp hack
+        user_info["urn"] = "urn:publicid:IDN+openflow:foam"+ str(THIS_SITE_TAG) +"+ch+" + "user+" + str(updated_slice_info_dict[slice_id]['owner_email']) #temp hack
         user_info["email"] = str(updated_slice_info_dict[slice_id]['owner_email'])
         old_exp_shutdown_success = self.gapi_DeleteSliver(slice_urn, creds, [])
         creation_result = self.gapi_CreateSliver(slice_urn, creds, slice_of_rspec, user_info)
