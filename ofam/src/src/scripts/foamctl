@@ -854,22 +854,70 @@ CMDS = {
     'ofelia:vlans:disable-full-vlan-assignment-automation' : (args_disableVlanAuto, pa_disableVlanAuto, do_disableVlanAuto),
 }
 
+ARGS = {
+    'admin:bundle-certs': '',
+    'admin:get-version' : '',
+    'admin:add-datapath' : '--dpid=<dpid>',
+    'admin:remove-datapath' : '--dpid=<dpid>',
+    'auth:set-admin-passwd' : '[--foam-admin-passwd-file=<foam-admin-passwd-file>]',
+    'config:set-value' : '--key=<key> --value=<value>',
+    'config:get-value': '--key=<key>',
+    'config:set-flowvisor-info' : '',
+    'config:setup-email' : '[--admin=<admin_email>] [--server=<server>] [--from=<mail_from>] [--reply-to=<reply_to>]',
+    'debug:start-coverage' : '',
+    'debug:stop-coverage' : '',
+    'debug:start-trace' : '',
+    'debug:stop-trace' : '',
+    'geni:list-slivers': '[--deleted] [--status=<status>]',
+    'geni:approve-sliver' : '--urn=<sliver_urn> [--priority <priority>]',
+    'geni:show-sliver' : '--urn=<sliver_urn> [--flowspace=<boolean>] [--flowspec=<boolean>] [--rspec=<boolean>]',
+    'geni:disable-sliver' : '--urn=<sliver_urn>',
+    'geni:reject-sliver' : '--urn=<sliver_urn>',
+    'geni:delete-sliver' : '--urn=<sliver_urn>',
+    'geni:set-sliver-expiration' : '--urn <sliver_urn> --date <date>',
+    'geni:openflow:enable-analysis-engine' : '',
+    'geni:overlap:rebuild-db' : '',
+    'geni:overlap:get-macs' : '',
+    'geni:overlap:get-ethertypes' : '',
+    'geni:overlap:get-subnets' : '',
+    'geni:approval:approve-everything' : '',
+    'geni:approval:set-mode' : '--mode=<mode>',
+    'geni:approval:add-user-urn' : '--urn=<user_urn>',
+    'geni:approval:remove-user-urn' : '--urn=<user_urn>',
+    'geni:approval:list-user-urns' : '',
+    'geni:approval:create-port-group' : '--pgid=<pgid>',
+    'geni:approval:add-port' : '',
+    'geni:approval:remove-port' : '',
+    'geni:approval:list-port-groups' : '',
+    'geni:approval:show-port-group' : '--pgid=<pgid>',
+    'ofelia:vlans:list-all-vlans' : '',
+    'ofelia:vlans:list-allocated-vlans' : '',
+    'ofelia:vlans:list-allocated-vlans-sorted' : '',
+    'ofelia:vlans:offer-vlan-tags' : '--vlanset=<max_number_of_vlans_to_return>',
+    'ofelia:vlans:stamp-slice-fs-with-vlan-range': '--urn=<sliver_urn> --vlanstampstart=<vlanstampstart> --vlanstampend=<vlanstampend>',
+    'ofelia:vlans:enable-full-vlan-assignment-automation' : '',
+    'ofelia:vlans:disable-full-vlan-assignment-automation' : '',
+}
+
 if __name__ == '__main__':
   try:
     if sys.argv[1] == "--help":
       raise IndexError
-    # Carolina: arguments will be in first position now
-    (parse_args, do_func) = CMDS[sys.argv[2]]
-    opts = parse_args(sys.argv[3:])
+    (parse_args, do_func) = CMDS[sys.argv[1]][1:]
+    opts = parse_args(sys.argv[2:])
     do_func(opts)
   except KeyError, e:
     print "'%s' is not a valid command" % (sys.argv[1])
   except IndexError, e:
     print "Valid commands are:"
-    cmds = [ (x, CMDS[x][0]) for x in CMDS.iterkeys() ]
-#    cmds = [x for x in CMDS.iterkeys()]
+    #Carolina's command
+#   cmds = [ (x, CMDS[x][0]) for x in CMDS.iterkeys() ]
+    #Vassilis's command
+    cmds = [ (x, ARGS[x]) for x in CMDS.iterkeys() ]
+    #original command
+#   cmds = [x for x in CMDS.iterkeys()]
     cmds.sort()
     for x in cmds:
-      print "\n\t%s %s" % (x[0], str(x[1]()))
+      print "\n\t%s %s" % (x[0], str(x[1])) #Vassilis
+#      print "\n\t%s %s" % (x[0], str(x[1]())) #Carolina
 #      print x
-
