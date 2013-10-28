@@ -25,9 +25,6 @@ def pa_setPassword (args):
   (options, args) = parser.parse_args(args)
   return options
 
-def args_setPassword ():
-  return "--foam-admin-passwd-file <file location for FOAM>"
-
 def do_setPassword (opts):
   if opts.foamadminpasswd:
     f = open(opts.foamadminpasswd, "r")
@@ -43,9 +40,6 @@ def do_setPassword (opts):
 def certs_parse_args (args):
   return {}
 
-def args_certs_parse_args ():
-  return ""
-
 def do_bundleCerts (opts):
   bundle = file("/opt/ofelia/ofam/local/etc/nginx-ca-certs.pem", "w+")
   for f in os.listdir("/opt/ofelia/ofam/local/etc/gcf-ca-certs"):
@@ -60,9 +54,6 @@ def pa_listSlivers (args):
   (options, args) = parser.parse_args(args)
   return options
 
-def args_listSlivers ():
-  return "-d|--deleted <boolean> [-s|--status <status>]"
-
 def do_listSlivers (opts):
   passwd = getPassword(opts)
   url = URL % (opts.host, "list-slivers")
@@ -71,7 +62,7 @@ def do_listSlivers (opts):
     obj["status"] = opts.status
 
   data = connect(url, opts.C_user, passwd, obj)
-  print "Tip: use the --status flag with value pending or approved for showing pending or approved slivers, ir the --deleted flag to show deleted ones"
+  print "Tip: use the --status flag with value pending or approved for showing pending or approved slivers, if the --deleted flag to show deleted ones"
   outputJSON(data)
 
 def pa_approveSliver (args):
@@ -82,9 +73,6 @@ def pa_approveSliver (args):
 
   (options, args) = parser.parse_args(args)
   return options
-
-def args_approveSliver ():
-  return "-u|--urn <sliver_urn> [-p|--priority <int>]"
 
 def do_approveSliver (opts):
   passwd = getPassword(opts)
@@ -103,9 +91,6 @@ def pa_setConfig (args):
   (options, args) = parser.parse_args(args)
   return options
 
-def args_setConfig ():
-  return ""
-
 def do_setConfig (opts):
   passwd = getPassword(opts)
   url = URL % (opts.host, "set-config")
@@ -120,9 +105,6 @@ def pa_getConfig (args):
 
   (options, args) = parser.parse_args(args)
   return options
-
-def args_getConfig ():
-  return ""
 
 def do_getConfig (opts):
   passwd = getPassword(opts)
@@ -140,9 +122,6 @@ def pa_setSliverExpiration (args):
 
   (options, args) = parser.parse_args(args)
   return options
-
-def args_setSliverExpiration ():
-  return ""
 
 def do_setSliverExpiration (opts):
   passwd = getPassword(opts)
@@ -162,9 +141,6 @@ def pa_showSliver (args):
 
   (options, args) = parser.parse_args(args)
   return options
-
-def args_showSliver ():
-  return ""
 
 def do_showSliver (opts):
   passwd = getPassword(opts)
@@ -206,9 +182,6 @@ def pa_disableSliver (args):
   (options, args) = parser.parse_args(args)
   return options
 
-def args_disableSliver ():
-  return ""
-
 def do_disableSliver (opts):
   passwd = getPassword(opts)
   if opts.urn is None:
@@ -226,9 +199,6 @@ def pa_rejectSliver (args):
   (options, args) = parser.parse_args(args)
   return options
 
-def args_rejectSliver ():
-  return ""
-
 def do_rejectSliver (opts):
   passwd = getPassword(opts)
   if opts.urn is None:
@@ -245,9 +215,6 @@ def pa_deleteSliver (args):
   parser.add_option("-u", "--urn", dest="urn")
   (options, args) = parser.parse_args(args)
   return options
-
-def args_deleteSliver ():
-  return ""
 
 def do_deleteSliver (opts):
   passwd = getPassword(opts)
@@ -272,9 +239,6 @@ def pa_URN (args):
   parser.add_option("-u", "--urn", dest="urn")
   (options, args) = parser.parse_args(args)
   return options
-
-def args_URN ():
-  return ""
 
 def do_geniApprovalAddUser (opts):
   passwd = getPassword(opts)
@@ -347,9 +311,6 @@ def pa_portgroup (args):
   (options, args) = parser.parse_args(args)
   return options
 
-def args_portgroup ():
-  return ""
-
 def do_geniApprovalPGAddPort (opts):
   passwd = getPassword(opts)
   url = GENI_URL % (opts.host, "approval/add-port")
@@ -403,9 +364,6 @@ def do_addDatapath (opts):
   data = connect(url, opts.C_user, passwd, obj)
   outputJSON(data)
 
-def args_addDatapath ():
-  return ""
-
 def pa_removeDatapath (args):
   parser = OptionParser()
   addCommonOpts(parser)
@@ -422,9 +380,6 @@ def do_removeDatapath (opts):
   
   data = connect(url, opts.C_user, passwd, obj)
   outputJSON(data)
-
-def args_removeDatapath ():
-  return ""
 
 def do_GETDebug (cmd, opts):
   passwd = getPassword(opts)
@@ -452,9 +407,6 @@ def do_authSetAdminPasswd (opts):
   data = connect(url, opts.C_user, passwd, obj)
   outputJSON(data)
 
-def args_authSetAdminPasswd ():
-  return "<password>"
-
 def pa_enableDefaults (args):
   parser = OptionParser()
   addCommonOpts(parser)
@@ -463,18 +415,12 @@ def pa_enableDefaults (args):
   (options, args) = parser.parse_args(args)
   return options
 
-def args_enableDefaults ():
-  return "--disable <boolean>"
-
 def pa_approvalMode (args):
   parser = OptionParser()
   addCommonOpts(parser)
   parser.add_option("--mode", default="never", dest="mode")
   (options, args) = parser.parse_args(args)
   return options
-
-def args_approvalMode ():
-  return "--mode <never>"
 
 def do_setApprovalMode (opts):
   passwd = getPassword(opts)
@@ -548,17 +494,11 @@ def do_configSetFVInfo (opts):
 
   outputJSON(data)
 
-def args_configSetFVInfo ():
-  return ""
-
 def pa_defaults (args):
   parser = OptionParser()
   addCommonOpts(parser)
   (options, args) = parser.parse_args(args)
   return options
-
-def args_defaults ():
-  return ""
 
 def pa_setupEmail (args):
   parser = OptionParser()
@@ -607,18 +547,12 @@ def do_setupEmail (opts):
   obj = { "key" : "email.reply-to", "value" : reply_to }
   data = connect(url, opts.C_user, passwd, obj)
 
-def args_setupEmail ():
-  return ""
-
 #Vasileios: VLAN handling (see admin.py for source code) start
 def pa_listVlans (args):
   parser = OptionParser()
   addCommonOpts(parser)
   (options, args) = parser.parse_args(args)
   return options
-
-def args_listVlans ():
-  return ""
 
 def do_listVlans (opts):
   passwd = getPassword(opts)
@@ -633,9 +567,6 @@ def pa_listAllocVlans (args):
   (options, args) = parser.parse_args(args)
   return options
 
-def args_listAllocVlans ():
-  return ""
-
 def do_listAllocVlans (opts):
   passwd = getPassword(opts)
   url = URL % (opts.host, "list-allocated-vlans")
@@ -648,9 +579,6 @@ def pa_listAllocVlansSorted (args):
   addCommonOpts(parser)
   (options, args) = parser.parse_args(args)
   return options
-
-def args_listAllocVlansSorted ():
-  return ""
 
 def do_listAllocVlansSorted (opts):
   passwd = getPassword(opts)
@@ -665,9 +593,6 @@ def pa_offerVlanTags (args):
   parser.add_option("--vlanset", dest="vlan_set", type="int", default=0)
   (options, args) = parser.parse_args(args)
   return options
-
-def args_offerVlanTags ():
-  return "--vlanset <int>"
 
 def do_offerVlanTags (opts):
   passwd = getPassword(opts)
@@ -687,9 +612,6 @@ def pa_stampFsWithVlan (args):
   (options, args) = parser.parse_args(args)
   return options
 
-def args_stampFsWithVlan ():
-  return "--urn <sliver_urn> --vlanstampstart <int> --vlanstampend <int>"
-
 def do_stampFsWithVlan (opts):
   passwd = getPassword(opts)
   url = URL % (opts.host, "expedient-stamp-fs-with-vlan")
@@ -705,9 +627,6 @@ def pa_enableVlanAuto (args):
   (options, args) = parser.parse_args(args)
   return options
 
-def args_enableVlanAuto ():
-  return ""
-
 def do_enableVlanAuto (opts):
   passwd = getPassword(opts)
   url = URL % (opts.host, "enable-vlan-assignment-automation")
@@ -720,9 +639,6 @@ def pa_disableVlanAuto (args):
   addCommonOpts(parser)
   (options, args) = parser.parse_args(args)
   return options
-
-def args_disableVlanAuto ():
-  return ""
 
 def do_disableVlanAuto (opts):
   passwd = getPassword(opts)
@@ -808,58 +724,58 @@ DEBUG_URL = "https://%s:3626/core/debug/%s"
 AUTH_URL = "https://%s:3626/core/auth/%s"
 GENI_URL = "https://%s:3626/geni/%s"
 
-# Carolina: adding arguments to commands (1st parameter)
 CMDS = {
-    'admin:bundle-certs': (args_certs_parse_args, certs_parse_args, do_bundleCerts),
-    'admin:get-version' : (args_defaults, pa_defaults, do_getVersion),
-    'admin:add-datapath' : (args_addDatapath, pa_addDatapath, do_addDatapath),
-    'admin:remove-datapath' : (args_removeDatapath, pa_removeDatapath, do_removeDatapath),
-    'auth:set-admin-passwd' : (args_authSetAdminPasswd, pa_authSetAdminPasswd, do_authSetAdminPasswd),
-    'config:set-value' : (args_setConfig, pa_setConfig, do_setConfig),
-    'config:get-value': (args_getConfig, pa_getConfig, do_getConfig),
-    'config:set-flowvisor-info' : (args_configSetFVInfo, pa_configSetFVInfo, do_configSetFVInfo),
-    'config:setup-email' : (args_setupEmail, pa_setupEmail, do_setupEmail),
-    'debug:start-coverage' : (args_defaults, pa_defaults, functools.partial(do_GETDebug, "start-coverage")),
-    'debug:stop-coverage' : (args_defaults, pa_defaults, functools.partial(do_GETDebug, "stop-coverage")),
-    'debug:start-trace' : (args_defaults, pa_defaults, functools.partial(do_GETDebug, "start-trace")),
-    'debug:stop-trace' : (args_defaults, pa_defaults, functools.partial(do_GETDebug, "stop-trace")),
-    'geni:list-slivers': (args_listSlivers, pa_listSlivers, do_listSlivers),
-    'geni:approve-sliver' : (args_approveSliver, pa_approveSliver, do_approveSliver),
-    'geni:show-sliver' : (args_showSliver, pa_showSliver, do_showSliver),
-    'geni:disable-sliver' : (args_disableSliver, pa_disableSliver, do_disableSliver),
-    'geni:reject-sliver' : (args_rejectSliver, pa_rejectSliver, do_rejectSliver),
-    'geni:delete-sliver' : (args_deleteSliver, pa_deleteSliver, do_deleteSliver),
-    'geni:set-sliver-expiration' : (args_setSliverExpiration, pa_setSliverExpiration, do_setSliverExpiration),
-    'geni:openflow:enable-analysis-engine' : (args_enableDefaults, pa_enableDefaults, do_enableAnalysisEngine),
-    'geni:overlap:rebuild-db' : (args_defaults, pa_defaults, do_geniApprovalRebuildDB),
-    'geni:overlap:get-macs' : (args_defaults, pa_defaults, do_geniApprovalGetMacs),
-    'geni:overlap:get-ethertypes' : (args_defaults, pa_defaults, do_geniApprovalGetEthertypes),
-    'geni:overlap:get-subnets' : (args_defaults, pa_defaults, do_geniApprovalGetSubnets),
-    'geni:approval:approve-everything' : (args_enableDefaults, pa_enableDefaults, do_configSetAutoApprove),
-    'geni:approval:set-mode' : (args_approvalMode, pa_approvalMode, do_setApprovalMode),
-    'geni:approval:add-user-urn' : (args_URN, pa_URN, do_geniApprovalAddUser),
-    'geni:approval:remove-user-urn' : (args_URN, pa_URN, do_geniApprovalRemoveUser),
-    'geni:approval:list-user-urns' : (args_defaults, pa_defaults, do_geniApprovalListUserURNs),
-    'geni:approval:create-port-group' : (args_defaults, pa_defaults, do_geniApprovalPGCreate),
-    'geni:approval:add-port' : (args_portgroup, pa_portgroup, do_geniApprovalPGAddPort),
-    'geni:approval:remove-port' : (args_portgroup, pa_portgroup, do_geniApprovalPGRemovePort),
-    'geni:approval:list-port-groups' : (args_defaults, pa_defaults, do_geniApprovalPGList),
-    'geni:approval:show-port-group' : (args_defaults, pa_portgroup, do_geniApprovalPGShow),
-    'ofelia:vlans:list-all-vlans' : (args_listVlans, pa_listVlans, do_listVlans),
-    'ofelia:vlans:list-allocated-vlans' : (args_listAllocVlans, pa_listAllocVlans, do_listAllocVlans),
-    'ofelia:vlans:list-allocated-vlans-sorted' : (args_listAllocVlansSorted, pa_listAllocVlansSorted, do_listAllocVlansSorted),
-    'ofelia:vlans:offer-vlan-tags' : (args_offerVlanTags, pa_offerVlanTags, do_offerVlanTags),
-    'ofelia:vlans:stamp-slice-fs-with-vlan-range': (args_stampFsWithVlan, pa_stampFsWithVlan, do_stampFsWithVlan),
-    'ofelia:vlans:enable-full-vlan-assignment-automation' : (args_enableVlanAuto, pa_enableVlanAuto, do_enableVlanAuto),
-    'ofelia:vlans:disable-full-vlan-assignment-automation' : (args_disableVlanAuto, pa_disableVlanAuto, do_disableVlanAuto),
+    'admin:bundle-certs': (certs_parse_args, do_bundleCerts),
+    'admin:get-version' : (pa_defaults, do_getVersion),
+    'admin:add-datapath' : (pa_addDatapath, do_addDatapath),
+    'admin:remove-datapath' : (pa_removeDatapath, do_removeDatapath),
+    'auth:set-admin-passwd' : (pa_authSetAdminPasswd, do_authSetAdminPasswd),
+    'config:set-value' : (pa_setConfig, do_setConfig),
+    'config:get-value': (pa_getConfig, do_getConfig),
+    'config:set-flowvisor-info' : (pa_configSetFVInfo, do_configSetFVInfo),
+    'config:setup-email' : (pa_setupEmail, do_setupEmail),
+    'debug:start-coverage' : (pa_defaults, functools.partial(do_GETDebug, "start-coverage")),
+    'debug:stop-coverage' : (pa_defaults, functools.partial(do_GETDebug, "stop-coverage")),
+    'debug:start-trace' : (pa_defaults, functools.partial(do_GETDebug, "start-trace")),
+    'debug:stop-trace' : (pa_defaults, functools.partial(do_GETDebug, "stop-trace")),
+    'geni:list-slivers': (pa_listSlivers, do_listSlivers),
+    'geni:approve-sliver' : (pa_approveSliver, do_approveSliver),
+    'geni:show-sliver' : (pa_showSliver, do_showSliver),
+    'geni:disable-sliver' : (pa_disableSliver, do_disableSliver),
+    'geni:reject-sliver' : (pa_rejectSliver, do_rejectSliver),
+    'geni:delete-sliver' : (pa_deleteSliver, do_deleteSliver),
+    'geni:set-sliver-expiration' : (pa_setSliverExpiration, do_setSliverExpiration),
+    'geni:openflow:enable-analysis-engine' : (pa_enableDefaults, do_enableAnalysisEngine),
+    'geni:overlap:rebuild-db' : (pa_defaults, do_geniApprovalRebuildDB),
+    'geni:overlap:get-macs' : (pa_defaults, do_geniApprovalGetMacs),
+    'geni:overlap:get-ethertypes' : (pa_defaults, do_geniApprovalGetEthertypes),
+    'geni:overlap:get-subnets' : (pa_defaults, do_geniApprovalGetSubnets),
+    'geni:approval:approve-everything' : (pa_enableDefaults, do_configSetAutoApprove),
+    'geni:approval:set-mode' : (pa_approvalMode, do_setApprovalMode),
+    'geni:approval:add-user-urn' : (pa_URN, do_geniApprovalAddUser),
+    'geni:approval:remove-user-urn' : (pa_URN, do_geniApprovalRemoveUser),
+    'geni:approval:list-user-urns' : (pa_defaults, do_geniApprovalListUserURNs),
+    'geni:approval:create-port-group' : (pa_defaults, do_geniApprovalPGCreate),
+    'geni:approval:add-port' : (pa_portgroup, do_geniApprovalPGAddPort),
+    'geni:approval:remove-port' : (pa_portgroup, do_geniApprovalPGRemovePort),
+    'geni:approval:list-port-groups' : (pa_defaults, do_geniApprovalPGList),
+    'geni:approval:show-port-group' : (pa_portgroup, do_geniApprovalPGShow),
+    'ofelia:vlans:list-all-vlans' : (pa_listVlans, do_listVlans),
+    'ofelia:vlans:list-allocated-vlans' : (pa_listAllocVlans, do_listAllocVlans),
+    'ofelia:vlans:list-allocated-vlans-sorted' : (pa_listAllocVlansSorted, do_listAllocVlansSorted),
+    'ofelia:vlans:offer-vlan-tags' : (pa_offerVlanTags, do_offerVlanTags),
+    'ofelia:vlans:stamp-slice-fs-with-vlan-range': (pa_stampFsWithVlan, do_stampFsWithVlan),
+    'ofelia:vlans:enable-full-vlan-assignment-automation' : (pa_enableVlanAuto, do_enableVlanAuto),
+    'ofelia:vlans:disable-full-vlan-assignment-automation' : (pa_disableVlanAuto, do_disableVlanAuto),
 }
 
+# Extra structure to set the list of arguments per command
 ARGS = {
     'admin:bundle-certs': '',
     'admin:get-version' : '',
     'admin:add-datapath' : '--dpid=<dpid>',
     'admin:remove-datapath' : '--dpid=<dpid>',
-    'auth:set-admin-passwd' : '[--foam-admin-passwd-file=<foam-admin-passwd-file>]',
+    'auth:set-admin-passwd' : '[--passwd-file=<foam-admin-passwd-file>]',
     'config:set-value' : '--key=<key> --value=<value>',
     'config:get-value': '--key=<key>',
     'config:set-flowvisor-info' : '',
@@ -869,18 +785,18 @@ ARGS = {
     'debug:start-trace' : '',
     'debug:stop-trace' : '',
     'geni:list-slivers': '[--deleted] [--status=<status>]',
-    'geni:approve-sliver' : '--urn=<sliver_urn> [--priority <priority>]',
+    'geni:approve-sliver' : '-u|--urn=<sliver_urn> [-p|--priority <priority_numeric_value]',
     'geni:show-sliver' : '--urn=<sliver_urn> [--flowspace=<boolean>] [--flowspec=<boolean>] [--rspec=<boolean>]',
     'geni:disable-sliver' : '--urn=<sliver_urn>',
     'geni:reject-sliver' : '--urn=<sliver_urn>',
     'geni:delete-sliver' : '--urn=<sliver_urn>',
     'geni:set-sliver-expiration' : '--urn <sliver_urn> --date <date>',
-    'geni:openflow:enable-analysis-engine' : '',
+    'geni:openflow:enable-analysis-engine' : '[--disable <boolean>]',
     'geni:overlap:rebuild-db' : '',
     'geni:overlap:get-macs' : '',
     'geni:overlap:get-ethertypes' : '',
     'geni:overlap:get-subnets' : '',
-    'geni:approval:approve-everything' : '',
+    'geni:approval:approve-everything' : '[--disable <boolean>]',
     'geni:approval:set-mode' : '--mode=<mode>',
     'geni:approval:add-user-urn' : '--urn=<user_urn>',
     'geni:approval:remove-user-urn' : '--urn=<user_urn>',
@@ -903,21 +819,14 @@ if __name__ == '__main__':
   try:
     if sys.argv[1] == "--help":
       raise IndexError
-    (parse_args, do_func) = CMDS[sys.argv[1]][1:]
-    opts = parse_args(sys.argv[2:])
+    (parse_args, do_func) = CMDS[sys.argv[1]][0:]
+    opts = parse_args(sys.argv[1:])
     do_func(opts)
   except KeyError, e:
     print "'%s' is not a valid command" % (sys.argv[1])
   except IndexError, e:
     print "Valid commands are:"
-    #Carolina's command
-#   cmds = [ (x, CMDS[x][0]) for x in CMDS.iterkeys() ]
-    #Vassilis's command
     cmds = [ (x, ARGS[x]) for x in CMDS.iterkeys() ]
-    #original command
-#   cmds = [x for x in CMDS.iterkeys()]
     cmds.sort()
     for x in cmds:
-      print "\n\t%s %s" % (x[0], str(x[1])) #Vassilis
-#      print "\n\t%s %s" % (x[0], str(x[1]())) #Carolina
-#      print x
+      print "\n\t%s %s" % (x[0], x[1])
