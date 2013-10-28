@@ -47,8 +47,8 @@ def do_bundleCerts (opts):
 
 def pa_listSlivers (args):
   parser = OptionParser()
-  parser.add_option("-d", "--deleted", dest="deleted", action="store_true", default=False)
-  parser.add_option("-s", "--status", dest="status", default=None)
+  parser.add_option("--deleted", dest="deleted", action="store_true", default=False)
+  parser.add_option("--status", dest="status", default=None)
   addCommonOpts(parser)
 
   (options, args) = parser.parse_args(args)
