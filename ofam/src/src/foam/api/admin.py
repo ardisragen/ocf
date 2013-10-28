@@ -16,7 +16,7 @@ from foam.geni.db import GeniDB
 from foam.core.configdb import ConfigDB
 import os, sys
 import json
-import foam.ofeliasettings.vlanset as ofvlset
+import foam.ofeliasettings.localsettings as locsettings
 
 from foam.ethzlegacyoptinstuff.legacyoptin.optsmodels import Experiment, ExperimentFLowSpace
 from foam.ethzlegacyoptinstuff.legacyoptin.flowspaceutils import dotted_ip_to_int, mac_to_int,\
@@ -437,7 +437,7 @@ class AdminAPIv1(Dispatcher):
           allocated_vlan_list.append(i)	
       allocated_vlan_list.sort()
 
-      for vlan_id in ofvlset.UNALLOWED_VLANS:
+      for vlan_id in locsettings.UNALLOWED_VLANS:
         free_vlan_list.remove(vlan_id)
 		
       #if (use_json == True):
@@ -522,14 +522,14 @@ class AdminAPIv1(Dispatcher):
         vlan_set = 0
       if use_json == True: #use json arg     
         if vlan_set == 0:
-          returnval = [x for x in range(1,4095) if x not in self.adminListAllocatedVlans(False) and x not in ofvlset.UNALLOWED_VLANS]
+          returnval = [x for x in range(1,4095) if x not in self.adminListAllocatedVlans(False) and x not in locsettings.UNALLOWED_VLANS]
         elif vlan_set in range(1,4095):
-          returnval = [x for x in range(1,4095) if x not in self.adminListAllocatedVlans(False) and x not in ofvlset.UNALLOWED_VLANS][:vlan_set]
+          returnval = [x for x in range(1,4095) if x not in self.adminListAllocatedVlans(False) and x not in locsettings.UNALLOWED_VLANS][:vlan_set]
         else:
           returnval = None
       else: #override json arg
         if set in range(1,4095):
-          returnval = [x for x in range(1,4095) if x not in self.adminListAllocatedVlans(False) and x not in ofvlset.UNALLOWED_VLANS][:set]
+          returnval = [x for x in range(1,4095) if x not in self.adminListAllocatedVlans(False) and x not in locsettings.UNALLOWED_VLANS][:set]
         else:
           returnval = None
       if (use_json == True):
