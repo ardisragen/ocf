@@ -20,4 +20,6 @@ MANAGERS = ADMINS
 
 #from vt_manager.utils.ThemeManager import initialize
 
+if DB_CONF:
+	DATABASES['default'].update(DB_CONF) 
 
