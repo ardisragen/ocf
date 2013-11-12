@@ -35,7 +35,7 @@ class PlanetLabAggregate(GENIAggregate):
 A PlanetLab Aggregate exposed through the GENI API.
 """
    
-    rspec = models.XMLField("RSpec", editable=False,)
+    rspec = models.TextField("RSpec", editable=False,)
     
     class Meta:
         verbose_name = "PlanetLab GENI-API Aggregate"
