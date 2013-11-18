@@ -46,13 +46,13 @@ SRC_DIR = join(dirname(__file__), '../../../')
 #
 # Database default parameters.
 #
-DATABASE_NAME = "expedient"
+DATABASE_NAME = "vt_manager"
 DATABASE_USER = "userName"
 DATABASE_PASSWORD = "password"
 DATABASE_HOST = "127.0.0.1"
 DATABASE_ENGINE = "django.db.backends.mysql"
 DATABASE_PORT = ''
-DATABASES = { 'default': {'ENGINE':DATABASE_ENGINE, 'PORT':'', 'NAME':DATABASE_NAME, 'USER':DATABASE_NAME, 'PASSWORD':DATABASE_PASSWORD, 'HOST':DATABASE_HOST}}
+DATABASES = { 'default': {'ENGINE':DATABASE_ENGINE, 'PORT':'', 'NAME':DATABASE_NAME, 'USER':DATABASE_USER, 'PASSWORD':DATABASE_PASSWORD, 'HOST':DATABASE_HOST}}
 
 #
 # List of callables that know how to import templates from various sources.
