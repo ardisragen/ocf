@@ -5,8 +5,6 @@ Created on Aug 19, 2010
 @author: jnaous, avico
 '''
 
-#DATABASES = { 'default': {'ENGINE':'mysql', 'PORT':'', 'NAME':'expedient', 'USER':'userName', 'PASSWORD':'password', 'HOST':''}}
-
 DATABASE_ENGINE = 'django.db.backends.mysql'
 '''It is possible to use sqlite, but for many of the tests to pass, we
 need a database that allows concurrent accesses such as MySQL. See Django's
@@ -33,3 +31,4 @@ DATABASE_PORT = ''
 
 
 DATABASES = { 'default': {'ENGINE':DATABASE_ENGINE, 'PORT':DATABASE_PORT, 'NAME':DATABASE_NAME, 'USER':DATABASE_USER, 'PASSWORD':DATABASE_PASSWORD, 'HOST':DATABASE_HOST}}
+

@@ -102,10 +102,10 @@ This needs to be overridden.
 '''
 
 # List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = [  
+TEMPLATE_LOADERS = [
     'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader', ] 
-
+    'django.template.loaders.app_directories.Loader',
+]
 append_to_local_setting(
     "TEMPLATE_LOADERS", TEMPLATE_LOADERS, globals())
 

@@ -59,8 +59,7 @@ DATABASES = { 'default': {'ENGINE':DATABASE_ENGINE, 'PORT':'', 'NAME':DATABASE_N
 #
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
+    'django.template.loaders.app_directories.Loader',)
 
 #
 # Middleware classes for Django.

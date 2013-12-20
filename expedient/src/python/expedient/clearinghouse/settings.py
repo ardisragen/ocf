@@ -61,8 +61,8 @@ try:
                     "expedient.clearinghouse.defaultsettings.%s"
                     % (var, item[0])
                 )
-    if DB_CONF:
-	DATABASES['default'].update(DB_CONF)
+     if DB_CONF:
+        DATABASES['default'].update(DB_CONF)
 except ImportError as e:
     if "No module named localsettings" in "%s" % e:
         print(
