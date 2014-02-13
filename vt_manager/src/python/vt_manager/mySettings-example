@@ -31,10 +31,15 @@ XMLRPC_PASS    = "changeMe"
 # Database parameters.
 # DATABASE_HOST: it is usually 'localhost' (or 127.0.0.1)
 #
-DATABASE_NAME = "vtm"
-DATABASE_USER = "expedient"
-DATABASE_PASSWORD = "expedient"
+DATABASE_NAME = "changeMe"
+DATABASE_USER = "changeMe"
+DATABASE_PASSWORD = "changeMe"
 DATABASE_HOST = "127.0.0.1"
+DATABASE_ENGINE = "django.db.backends.mysql"
+DATABASE_PORT = ''
+DB_CONF = { 'default': {'ENGINE':DATABASE_ENGINE, 'PORT':'', 'NAME':DATABASE_NAME, 'USER':DATABASE_USER, 'PASSWORD':DATABASE_PASSWORD, 'HOST':DATABASE_HOST}}
+
+
 
 #
 # Name for the island that is to be set on your host.
