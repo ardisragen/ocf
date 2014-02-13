@@ -6,7 +6,7 @@ import logging
 import logging.handlers
 import os.path
 from StringIO import StringIO
-
+from openflow.optin_manager.sfa.sfa_config import config 
 from openflow.optin_manager.xmlrpc_server.models import CallBackServerProxy, FVServerProxy
 #from openflow.optin_manager.sfa.drivers.OFShell import OFShell
 
@@ -52,6 +52,8 @@ def getAdvertisement (nodes):
   if links:    
     for link in links:
       addAdLink(rspec, link)
+    for link in links:
+      addGeniLink(rspec,link)
 #getLinks END 
 
   xml = StringIO()
@@ -64,7 +66,7 @@ def addAdDevice (rspec, dpid, active=True):
 
   od = ET.SubElement(rspec, "{%s}datapath" % (OFNSv3))
   od.attrib["component_id"] = switch_urn
-  od.attrib["component_manager_id"] = "urn:publicid:IDN+openflow:optin_manager:%s+authority+am" % ('i2cat.ocf.of')
+  od.attrib["component_manager_id"] = "urn:publicid:IDN+openflow:%s+cm" % (config.HRN_URN)
   od.attrib["dpid"] = dpid['dpid']
 
   #locdata = GeniDB.getLocationData(dpid, switch_urn)
@@ -91,11 +93,26 @@ def addAdLink (rspec, link):
   od.attrib["dstDPID"] = link['dst']['dpid']#link["dstDPID"]
   od.attrib["dstPort"] = link['dst']['port']#link["dstPort"]
 
+def addGeniLink(rspec, link):
+  def add_dpid(od, dpid):
+    dpids = ET.SubElement(od, "{%s}datapath" %(OFNSv3))
+    dpids.attrib["component_id"] = "urn:publicid:IDN+openflow:%s+datapath+%s" % (config.HRN_URN, dpid)
+    dpids.attrib["component_manager_id"] = "urn:publicid:IDN+openflow:%s+cm" % (config.HRN_URN)
+    dpids.attrib["dpid"] = dpid
+  def add_port(od, port):
+    ps = ET.SubElement(od, "{%s}port" %(OFNSv3))
+    ps.attrib["port_num"] = link['src']['port']
+
+  od = ET.SubElement(rspec, "{%s}link" % (OFNSv3))
+  od.attrib["component_id"] = "urn:publicid:IDN+openflow:%s+link+%s_%s_%s_%s" %(config.HRN_URN,link['src']['dpid'], link['src']['port'],link['dst']['dpid'],link['dst']['port'])
+  add_dpid(od, link['src']['dpid'])
+  add_port(od, link['src']['port'])
+  add_dpid(od,link['dst']['dpid'])
+  add_dpid(od,link['dst']['port']) 
+  
 
 def generateSwitchComponentID (dpid, tag = None):
-  if tag is None:
-    tag = 'ocf_of'
-  return "urn:publicid:IDN+openflow:optin_manager:%s+datapath+%s" % (tag, dpid)
+  return "urn:publicid:IDN+openflow:%s+datapath+%s" % (config.HRN_URN, dpid)
 
 
 def getManifest(slivers, slice_leaf):

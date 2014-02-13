@@ -83,6 +83,16 @@ def ping(challenge):
 	return challenge
 
 
+@rpcmethod(url_name="plugin")    
+def list_vm_templates(server_uuid):
+#	callback_url = "https://" + settings.XMLRPC_USER + ":" + settings.XMLRPC_PASS + "@" + settings.VTAM_IP + ":" + settings.VTAM_PORT + "/xmlrpc/plugin"
+#	try:
+#		ServiceProcess.startMethodInNewProcess(DispatcherLauncher.processTemplateList, [server_uuid, callback_url], None)
+#	except Exception as e:
+#		logging.error("Could not retrieve VM templates info: " + e)
+	v,s = getattr(DispatcherLauncher,"processVMTemplatesInfo")(server_uuid)
+	return v,s
+
 @rpcmethod(url_name="plugin")
 def listResources(remoteHashValue, projectUUID = 'None', sliceUUID ='None'):
 	

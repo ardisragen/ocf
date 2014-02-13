@@ -47,13 +47,24 @@ class VMcontroller():
             instance.operatingSystemDistribution = 'Debian'
             instance.hdOriginPath = "default/default.tar.gz"
             instance.virtualization_setup_type = "paravirtualization"
+        if instance.disc_image == 'irati':
+            instance.operatingSystemType = 'GNU/Linux'
+            instance.operatingSystemVersion = '7.0'
+            instance.operatingSystemDistribution = 'Debian'
+            instance.hdOriginPath = "irati/irati.img"
+            instance.virtualization_setup_type = "hvm"
         if instance.disc_image == 'spirent':
             instance.operatingSystemType = 'GNU/Linux'
             instance.operatingSystemVersion = '6.2'
             instance.operatingSystemDistribution = 'CentOS'
             instance.hdOriginPath = "spirent/spirentSTCVM.img"
             instance.virtualization_setup_type = "hvm"
-
+        if instance.disc_image == 'debian7':
+            instance.operatingSystemType = 'GNU/Linux'
+            instance.operatingSystemVersion = '7.0'
+            instance.operatingSystemDistribution = 'Debian'
+            instance.hdOriginPath = "debian7/debian7.img"
+            instance.virtualization_setup_type = "hvm"
         actionClass = copy.deepcopy(actionClassEmpty)
         actionClass.id = uuid.uuid4()
         Translator.VMmodelToClass(instance, actionClass.server.virtual_machines[0])
