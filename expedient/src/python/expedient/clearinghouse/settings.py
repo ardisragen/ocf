@@ -25,16 +25,16 @@ from expedient.clearinghouse.defaultsettings.plugin import *
 from expedient.clearinghouse.defaultsettings.required import REQUIRED_SETTINGS
 
 # Try getting importing the secret key from a secret_key module
-try:
-    from secret_key import SECRET_KEY
-except ImportError:
-    print(
-        "Error importing secret_key module. Using default insecure key."
-        "Please run the 'create_secret_key' manage.py command to create "
-        "a new secret key. Do this only after setting up your local settings."
-        " If you are not yet running the production server, you can ignore "
-        "this error."
-    )
+# try:
+#    from secret_key import SECRET_KEY
+#except ImportError:
+#    print(
+#        "Error importing secret_key module. Using default insecure key."
+#        "Please run the 'create_secret_key' manage.py command to create "
+#        "a new secret key. Do this only after setting up your local settings."
+#        " If you are not yet running the production server, you can ignore "
+#        "this error."
+#    )
 
 # Now import the local settings
 try:
